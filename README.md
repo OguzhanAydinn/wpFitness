@@ -1,2 +1,1 @@
-# wpFitness
-Svn Bağlantılı
+# Fitness
