@@ -2,13 +2,14 @@
  Contact form
  --------------------------------------------- */
 $(document).ready(function(){
-    $("#submit_btn").click(function(){
+    $("#reg-btn").click(function(){
         
         //get input field values
-        var user_name = $('input[name=name]').val();
+        var user_name = $('input[name=username]').val();
         var user_email = $('input[name=email]').val();
-        var user_message = $('textarea[name=message]').val();
-        
+        var user_password = $('input[name=password]').val();
+        var user_repassword = $('input[name=re-password]').val();
+		pred(user_repassword);
         //simple validation at client's end
         //we simply change border color to red if empty field using .css()
         var proceed = true;
@@ -21,22 +22,27 @@ $(document).ready(function(){
             proceed = false;
         }
         
-        if (user_message == "") {
-            $('textarea[name=message]').css('border-color', '#e41919');
+        if (user_password == "") {
+            $('input[name=password]').css('border-color', '#e41919');
             proceed = false;
         }
-        
+        if(user_password!=user_repassword){
+			$('input[name=password]').css('border-color', '#e41919');
+			$('input[name=re-password]').css('border-color', '#e41919');
+			proceed = false;
+		}
         //everything looks good! proceed...
         if (proceed) {
             //data to be sent to server
             post_data = {
                 'userName': user_name,
                 'userEmail': user_email,
-                'userMessage': user_message
+                'user_password': user_password,
+				'user_repassword':user_repassword
             };
             
             //Ajax post data to server
-            $.post('index.php?p=1&a=2', post_data, function(response){
+            $.post('index.php?p=1&a=2&', post_data, function(response){
             
                 //load json data from server and output message     
                 if (response.type == 'error') {
